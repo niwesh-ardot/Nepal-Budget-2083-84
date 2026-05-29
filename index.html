@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nepal Budget 2083/84 Explorer</title>
+  <meta name="description" content="Interactive English/Nepali guide to Nepal's Budget Speech and Finance Bill for FY 2083/84." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="soft-bg"></div>
+  <header class="site-header" id="top">
+    <a class="brand" href="#top" aria-label="Nepal Budget Explorer home">
+      <span class="brand-mark">₨</span>
+      <span><strong data-i18n="brandTitle">Nepal Budget Explorer</strong><small data-i18n="brandSub">FY 2083/84 · unofficial guide</small></span>
+    </a>
+    <div class="header-actions">
+      <div class="language-switch" role="group" aria-label="Language selection">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="ne">ने</button>
+      </div>
+      <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+    </div>
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#snapshot" data-i18n="navSnapshot">Snapshot</a>
+      <a href="#credits" data-i18n="navCredits">Credit</a>
+      <a href="#sectors" data-i18n="navSectors">Sectors</a>
+      <a href="#finance-bill" data-i18n="navFinance">Finance Bill</a>
+      <a href="#tariffs" data-i18n="navTariffs">Tariffs</a>
+      <a href="#library" data-i18n="navLibrary">Library</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero section-pad">
+      <div class="hero-copy reveal">
+        <p class="eyebrow" data-i18n="heroEyebrow">नेपाल बजेट २०८३/८४</p>
+        <h1 data-i18n="heroTitle">Understand Nepal’s Budget 2083/84 in one interactive place.</h1>
+        <p class="hero-text" data-i18n="heroText">A mobile-friendly public explainer built from reconstructed Nepali and English markdown: budget totals, sector priorities, finance-bill clauses, tariff schedules, and full-text search in one place.</p>
+        <div class="language-note" id="languageNote"></div>
+        <div class="hero-actions">
+          <a class="btn primary" href="#snapshot" data-i18n="heroPrimary">Start with the big picture</a>
+          <a class="btn ghost" href="#search-panel" data-i18n="heroSecondary">Search the documents</a>
+        </div>
+        <div class="trust-strip" role="list" aria-label="Source notes">
+          <span role="listitem" data-i18n="trustOcr">OCR-derived</span>
+          <span role="listitem" data-i18n="trustBilingual">Bilingual</span>
+          <span role="listitem" data-i18n="trustTariff">Tariff lookup</span>
+          <span role="listitem" data-i18n="trustCredit">Source credited</span>
+          <span role="listitem" data-i18n="trustUnofficial">Unofficial</span>
+        </div>
+      </div>
+      <div class="hero-card reveal delay-1" aria-label="Budget overview card">
+        <div class="budget-orb"><span>NPR</span><strong id="heroTotal">2,124.34B</strong></div>
+        <div class="hero-metric-grid" id="heroMetrics"></div>
+        <p data-i18n="heroCardText">The site reads like an explainer, but still lets power users dig into the underlying clauses and tables.</p>
+      </div>
+    </section>
+
+    <section class="section-pad credit-section" id="credits" aria-label="Source credit">
+      <article class="credit-card glass-card reveal">
+        <div class="credit-copy">
+          <p class="eyebrow" data-i18n="creditEyebrow">Source credit</p>
+          <h2 data-i18n="creditTitle">Made possible by the OCR markdown reconstruction work</h2>
+          <p data-i18n="creditText">This website is an interactive reading layer. The clean OCR-derived Nepali markdown, English markdown, and reconstruction pipeline are credited to the open-source repository below.</p>
+        </div>
+        <a class="credit-link" href="https://github.com/bibstha/nepal-budget-2083-2084" target="_blank" rel="noopener noreferrer">
+          <span data-i18n="creditRepoLabel">Original reconstruction repo</span>
+          <strong>github.com/bibstha/nepal-budget-2083-2084</strong>
+        </a>
+      </article>
+    </section>
+
+    <section class="section-pad cards-row" id="explainers" aria-label="Plain language explainers"></section>
+
+    <section class="section-pad panel" id="snapshot">
+      <div class="section-head">
+        <p class="eyebrow" data-i18n="snapshotEyebrow">Big picture</p>
+        <h2 data-i18n="snapshotTitle">Where the money goes and where it comes from</h2>
+        <p data-i18n="snapshotText">Total expenditure is presented as NPR 2,124.34 billion, split across recurrent spending, capital spending, and financing obligations.</p>
+      </div>
+      <div class="snapshot-grid">
+        <article class="glass-card chart-card">
+          <div class="card-title-row"><h3 data-i18n="allocationTitle">Allocation split</h3><span class="pill" data-i18n="nprBillions">NPR billions</span></div>
+          <canvas id="allocationChart" width="560" height="320" aria-label="Budget allocation chart"></canvas>
+          <div class="legend" id="allocationLegend"></div>
+        </article>
+        <article class="glass-card">
+          <div class="card-title-row"><h3 data-i18n="fundingTitle">Funding stack</h3><span class="pill" data-i18n="sourceLabel">source</span></div>
+          <div id="sourceBars" class="source-bars"></div>
+          <p class="note" id="gapNote"></p>
+        </article>
+      </div>
+      <div class="transfer-card glass-card">
+        <div>
+          <h3 data-i18n="transferTitle">Fiscal transfers to provinces and local levels</h3>
+          <p id="federalNote"></p>
+        </div>
+        <div class="table-wrap"><table id="transferTable"></table></div>
+      </div>
+    </section>
+
+    <section class="section-pad" id="sectors">
+      <div class="section-head split-head">
+        <div>
+          <p class="eyebrow" data-i18n="sectorEyebrow">Sector explorer</p>
+          <h2 data-i18n="sectorTitle">Click through the budget by topic</h2>
+          <p data-i18n="sectorText">Each card is built from the Budget Speech’s English sector sections. Use filters to move from roads and energy to health, education, jobs, federalism, and revenue policy.</p>
+        </div>
+        <label class="searchbox small"><span data-i18n="filterLabel">Filter</span><input id="sectorSearch" type="search" data-i18n-placeholder="sectorPlaceholder" placeholder="road, health, startup, tax…" /></label>
+      </div>
+      <div class="chips" id="sectorChips"></div>
+      <div class="sector-grid" id="sectorGrid"></div>
+    </section>
+
+    <section class="section-pad panel" id="finance-bill">
+      <div class="section-head split-head">
+        <div>
+          <p class="eyebrow" data-i18n="financeEyebrow">Finance Bill decoder</p>
+          <h2 data-i18n="financeTitle">The legal machinery behind the budget</h2>
+          <p data-i18n="financeText">Browse the Act’s main clauses by category. These explain which taxes, duties, waivers, amendments, and administrative provisions are being activated.</p>
+        </div>
+        <label class="searchbox small"><span data-i18n="findClauseLabel">Find clause</span><input id="financeSearch" type="search" data-i18n-placeholder="financePlaceholder" placeholder="VAT, green tax, paneer, casino…" /></label>
+      </div>
+      <div class="chips" id="financeChips"></div>
+      <div class="clause-list" id="financeList"></div>
+    </section>
+
+    <section class="section-pad" id="tariffs">
+      <div class="section-head split-head">
+        <div>
+          <p class="eyebrow" data-i18n="tariffEyebrow">Tariff lookup</p>
+          <h2 data-i18n="tariffTitle">Search the reconstructed HS-code tables</h2>
+          <p data-i18n="tariffText">Search by HS code, Nepali description, group, or rate. OCR artifacts may remain, especially in numeric tables, so treat results as a fast index, not legal advice.</p>
+        </div>
+        <label class="searchbox"><span data-i18n="tariffSearchLabel">Tariff search</span><input id="tariffSearch" type="search" data-i18n-placeholder="tariffPlaceholder" placeholder="०७०१, आलु, electric, १०…" /></label>
+      </div>
+      <div class="tariff-tools">
+        <button class="btn chip-btn active" data-rate="all" data-i18n="allRows">All</button>
+        <button class="btn chip-btn" data-rate="has-rate" data-i18n="rowsWithRates">Rows with rates</button>
+        <button class="btn chip-btn" data-rate="no-rate" data-i18n="rowsWithoutRates">Rows without rates</button>
+        <span id="tariffCount" class="count-label"></span>
+      </div>
+      <div class="table-wrap tall"><table id="tariffTable"></table></div>
+    </section>
+
+    <section class="section-pad panel" id="search-panel">
+      <div class="section-head split-head">
+        <div>
+          <p class="eyebrow" data-i18n="searchEyebrow">Search everything</p>
+          <h2 data-i18n="searchTitle">One search box across speech + bill, English + Nepali</h2>
+          <p data-i18n="searchText">This is useful when you remember a topic but not the document. Try “diaspora,” “VAT,” “स्वास्थ्य,” “कृषि,” or an HS code.</p>
+        </div>
+        <label class="searchbox"><span data-i18n="fullTextLabel">Full-text search</span><input id="globalSearch" type="search" data-i18n-placeholder="globalPlaceholder" placeholder="Search all reconstructed markdown…" /></label>
+      </div>
+      <div class="results" id="globalResults"></div>
+    </section>
+
+    <section class="section-pad" id="library">
+      <div class="section-head split-head">
+        <div>
+          <p class="eyebrow" data-i18n="libraryEyebrow">Source library</p>
+          <h2 data-i18n="libraryTitle">Read the reconstructed markdown directly</h2>
+          <p data-i18n="libraryText">Select a document, jump into the markdown, and download a copy from your browser. The Nepali documents are OCR-derived; the English versions are machine-assisted translations.</p>
+        </div>
+        <div class="library-controls">
+          <select id="docSelect" aria-label="Choose source document"></select>
+          <button class="btn ghost" id="downloadDoc" data-i18n="downloadDoc">Download selected .md</button>
+        </div>
+      </div>
+      <article class="doc-viewer glass-card">
+        <div class="doc-toolbar">
+          <label class="searchbox small"><span data-i18n="withinDocLabel">Within document</span><input id="docSearch" type="search" data-i18n-placeholder="docPlaceholder" placeholder="Find in selected document…" /></label>
+          <span id="docMeta" class="count-label"></span>
+        </div>
+        <div id="docContent" class="markdown-body"></div>
+      </article>
+    </section>
+
+    <section class="section-pad methodology panel" id="methodology">
+      <div class="section-head">
+        <p class="eyebrow" data-i18n="methodEyebrow">Method and caveat</p>
+        <h2 data-i18n="methodTitle">Built from reconstructed markdown, not official legal text</h2>
+        <p data-i18n="methodText">The source documents were processed through OCR, flow correction, and markdown conversion. This website is designed for public understanding and analysis, not as an authoritative legal source.</p>
+      </div>
+      <div class="method-grid">
+        <div class="method-step"><strong>1</strong><h3 data-i18n="method1Title">OCR recovery</h3><p data-i18n="method1Text">Text was reconstructed from official budget documents into clean, searchable markdown.</p></div>
+        <div class="method-step"><strong>2</strong><h3 data-i18n="method2Title">Flow correction</h3><p data-i18n="method2Text">Page breaks, fragments, and table structure were cleaned so the documents behave like actual text.</p></div>
+        <div class="method-step"><strong>3</strong><h3 data-i18n="method3Title">Interactive layer</h3><p data-i18n="method3Text">The website adds summaries, filters, charts, tariff lookup, and bilingual search.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <button class="to-top" id="toTop" aria-label="Back to top">↑</button>
+  <dialog id="detailModal">
+    <button class="modal-close" aria-label="Close details">×</button>
+    <div id="modalBody"></div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
